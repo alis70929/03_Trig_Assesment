@@ -9,7 +9,12 @@ def num_check(question, upper_bound=None):
     valid = False
     while not valid:
         try:
-            response = float(input(question))
+            response = input(question)
+
+            if response == "":
+                return response
+
+            response = float(response)
 
             if upper_bound is not None:
                 if response > 0 and response < upper_bound:
@@ -27,6 +32,7 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
-side_length = num_check("Side Length: ", None)
-for item in range(0, 3):
+''' for item in range(0, 2):
+    side_length = num_check("Side Length: ", None) '''
+for item in range(0, 4):
     first_angle = num_check("First angle:", 90)

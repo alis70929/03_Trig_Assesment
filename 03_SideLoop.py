@@ -27,6 +27,9 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
-side_length = num_check("Side Length: ", None)
-for item in range(0, 3):
-    first_angle = num_check("First angle:", 90)
+side_list = []
+valid = False
+while not valid:
+    Vertical = num_check("Vertical side length", None)
+    Horizontal = num_check("Horizontal side length", None)
+    Hypotenuse = num_check("Hypotenuse side length: ", None)
