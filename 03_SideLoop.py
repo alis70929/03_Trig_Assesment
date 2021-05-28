@@ -27,9 +27,28 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
-side_list = []
-valid = False
-while not valid:
-    Vertical = num_check("Vertical side length", None)
-    Horizontal = num_check("Horizontal side length", None)
-    Hypotenuse = num_check("Hypotenuse side length: ", None)
+def get_sides():
+    side_list = []
+    for item in range(0, 3):
+        side_list.append("")
+
+    valid = False
+    while not valid:
+        given_sides = 0
+
+        side_list[0] = num_check("Vertical side length", None)
+        if side_list[0] != "":
+            given_sides += 1
+
+        side_list[1] = num_check("Horizontal side length", None)
+        if side_list[1] != "":
+            given_sides += 1
+
+        if given_sides == 2:
+            return [side_list, given_sides]
+
+        side_list[2] = num_check("Hypotenuse side length: ", None)
+
+        if given_sides >= 1:
+            return[side_list, given_sides]
+        
