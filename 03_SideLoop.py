@@ -9,7 +9,12 @@ def num_check(question, upper_bound=None):
     valid = False
     while not valid:
         try:
-            response = float(input(question))
+            response = input(question)
+
+            if response == "":
+                return response
+
+            response = float(response)
 
             if upper_bound is not None:
                 if response > 0 and response < upper_bound:
@@ -27,6 +32,7 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
+# get side information from user, returns sides in a list (Vertical,horizontal hypotenuse) and how many sides are given
 def get_sides():
     side_list = []
     for item in range(0, 3):
@@ -36,11 +42,11 @@ def get_sides():
     while not valid:
         given_sides = 0
 
-        side_list[0] = num_check("Vertical side length", None)
+        side_list[0] = num_check("Vertical side length: ", None)
         if side_list[0] != "":
             given_sides += 1
 
-        side_list[1] = num_check("Horizontal side length", None)
+        side_list[1] = num_check("Horizontal side length: ", None)
         if side_list[1] != "":
             given_sides += 1
 
@@ -51,4 +57,11 @@ def get_sides():
 
         if given_sides >= 1:
             return[side_list, given_sides]
-        
+        else:
+            print("please enter at least one side")
+
+
+for item in range(0, 4):
+    sides_values = get_sides()
+sides = sides_values[0]
+given_sides_amount = sides_values[1]
