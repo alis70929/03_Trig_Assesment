@@ -32,7 +32,27 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
-''' for item in range(0, 2):
-    side_length = num_check("Side Length: ", None) '''
-for item in range(0, 4):
-    first_angle = num_check("First angle:", 90)
+def get_angles():
+    angle_data = ["", ""]
+    angle_data[0] = num_check("Angle A: ", 90)
+    if angle_data[0] != "":
+        return angle_data
+
+    angle_data[1] = num_check("Angle B: ", 90)
+    if angle_data[1] != "":
+        return angle_data
+
+    if angle_data[0] == "" and angle_data[1] == "":
+        print("Please Enter 2 sides or 1 angle")
+        return "Invalid Input"
+
+
+# Main Routine
+angles = "Invalid Input"
+while angles == "Invalid Input":
+    given_sides = int(input("Given Sides: "))
+
+    if given_sides == 1:
+        angles = get_angles()
+    else: 
+        angles = ["", ""]

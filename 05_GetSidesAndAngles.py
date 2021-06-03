@@ -32,51 +32,47 @@ def num_check(question, upper_bound=None):
             print(error)
 
 
-# Prints out a triangle with labeled sides
-def display_triangle():
-    triangle = "V |\ H \n" \
-               "E |A\ Y \n" \
-               "R |  \ P \n" \
-               "T |   \ O \n" \
-               "I |    \ T \n" \
-               "C |     \ E \n" \
-               "A |      \ N \n" \
-               "L |       \ U \n" \
-               "  |        \ S \n" \
-               "  |________B\ E \n" \
-               "   HORIZONTAL \n"
-    print(triangle)
-
-
 # get side information from user, returns sides in a list (Vertical,horizontal hypotenuse) and how many sides are given
-def get_sides():
-    side_list = []
-    for item in range(0, 3):
-        side_list.append("")
+def get_triangle_data():
+    # store triangle data
+    triangle_data = ["", "", "", "", ""]
 
     valid = False
     while not valid:
         given_sides = 0
 
-        side_list[0] = num_check("Vertical side length: ", None)
-        if side_list[0] != "":
+        triangle_data[0] = num_check("Vertical side length: ", None)
+        if triangle_data[0] != "":
             given_sides += 1
 
-        side_list[1] = num_check("Horizontal side length: ", None)
-        if side_list[1] != "":
+        triangle_data[1] = num_check("Horizontal side length: ", None)
+        if triangle_data[1] != "":
             given_sides += 1
 
         if given_sides == 2:
-            return [side_list, given_sides]
+            return triangle_data
 
-        side_list[2] = num_check("Hypotenuse side length: ", None)
+        triangle_data[2] = num_check("Hypotenuse side length: ", None)
+        if triangle_data[2] != "":
+            given_sides += 1
 
-        if given_sides >= 1:
-            return[side_list, given_sides]
+        if given_sides == 1:
+            triangle_data[3] = num_check("Angle A: ", 90)
+            if triangle_data[3] != "":
+                return triangle_data
+
+            triangle_data[4] = num_check("Angle B: ", 90)
+            if triangle_data[4] != "":
+                return triangle_data
+
+            if triangle_data[0] == "" and triangle_data[1] == "":
+                print("Please Enter 2 sides or 1 angle and a side")
+                continue
+        elif given_sides == 2:
+            return triangle_data
         else:
             print("please enter at least one side")
 
 
-# *** Main Routine **
-display_triangle()
-get_sides()
+# Main Routine
+triangle_data = get_triangle_data()
