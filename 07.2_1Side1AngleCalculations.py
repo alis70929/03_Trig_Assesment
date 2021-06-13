@@ -86,23 +86,51 @@ def triangle_solver(raw_triangle_data_var):
     Hypotenuse = triangle_data[2]
     Angle_A = triangle_data[3]
     Angle_B = triangle_data[4]
-    if given_sides == 2:
-        if Vertical != "" and Horizontal != "":
-            Hypotenuse = math.sqrt(math.pow(Horizontal, 2) + math.pow(Vertical, 2))
-            print("Hypotenuse: {:.2f}".format(Hypotenuse))
 
-        elif Vertical != "" and Hypotenuse != "":
-            Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2))
-            print("Horizontal: {:.2f}".format(Horizontal))
+    if given_sides == 2:
+        if Vertical != "":
+            if Horizontal != "":
+                Hypotenuse = math.sqrt(math.pow(Horizontal, 2) + math.pow(Vertical, 2))
+                print("Hypotenuse: {:.2f}".format(Hypotenuse))
+
+            elif Hypotenuse != "":
+                Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2))
+                print("Horizontal: {:.2f}".format(Horizontal))
 
         elif Horizontal != "" and Hypotenuse != "":
             Vertical = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Horizontal, 2))
             print("Vertical: {:.2f}".format(Vertical))
 
-    Angle_A = math.degrees(math.asin(Horizontal / Hypotenuse))
-    print("Angle A: {:.2f}".format(Angle_A))
-    Angle_B = math.degrees(math.asin(Vertical / Hypotenuse))
-    print("Angle B: {:.2f}".format(Angle_B))
+        Angle_A = math.degrees(math.asin(Horizontal / Hypotenuse))
+        print("Angle A: {:.2f}".format(Angle_A))
+        Angle_B = math.degrees(math.asin(Vertical / Hypotenuse))
+        print("Angle B: {:.2f}".format(Angle_B))
+    elif given_sides == 1:
+        if Angle_A != "":
+            Angle_B = 90 - Angle_A
+            if Horizontal != "":
+                Vertical = Horizontal / math.degrees(math.tan(Angle_A))
+                Hypotenuse = Horizontal / math.degrees(math.sin(Angle_A))
+            elif Vertical != "":
+                Horizontal = Vertical * math.degrees(math.tan(Angle_A))
+                Hypotenuse = Vertical / math.degrees(math.cos(Angle_A))
+            elif Hypotenuse != "":
+                Horizontal = Hypotenuse * math.degrees(math.cos(Angle_A))
+                Vertical = Hypotenuse * math.degrees(math.sin(Angle_A))
+
+        elif Angle_B != "":
+            Angle_A = 90 - Angle_B
+            if Horizontal != "":
+                Vertical = Horizontal * math.degrees(math.tan(Angle_B))
+                Hypotenuse = Horizontal / math.degrees(math.cos(Angle_B))
+            elif Vertical != "":
+                Horizontal = Vertical / math.degrees(math.tan(Angle_B))
+                Hypotenuse = Horizontal / math.degrees(math.sin(Angle_B))
+            elif Hypotenuse != "":
+                Horizontal = Hypotenuse * math.degrees(math.sin(Angle_B))
+                Vertical = Hypotenuse * math.degrees(math.cos(Angle_B))
+
+    
 
 
 # Main Routine
