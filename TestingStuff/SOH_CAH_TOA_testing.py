@@ -1,3 +1,3 @@
 import math
 
-print(math.degrees(math.asin(0.5)))
+print(math.sin(math.pi / 3))

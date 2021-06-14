@@ -53,7 +53,7 @@ def get_triangle_data():
             given_sides += 1
 
         if given_sides == 2:
-            return [triangle_data, given_sides]
+            break
 
         triangle_data[2] = num_check("Hypotenuse side length: ", None)
         if triangle_data[2] != "":
@@ -62,19 +62,21 @@ def get_triangle_data():
         if given_sides == 1:
             triangle_data[3] = num_check("Angle A: ", 90)
             if triangle_data[3] != "":
-                return triangle_data
+                break
 
             triangle_data[4] = num_check("Angle B: ", 90)
             if triangle_data[4] != "":
-                return triangle_data
+                break
 
             if triangle_data[0] == "" and triangle_data[1] == "":
                 print("Please Enter 2 sides or 1 angle and a side")
                 continue
         elif given_sides == 2:
-            return [triangle_data, given_sides]
+            break
         else:
             print("please enter at least one side")
+
+    return [triangle_data, given_sides]
 
 
 def triangle_solver(raw_triangle_data_var):
@@ -105,32 +107,41 @@ def triangle_solver(raw_triangle_data_var):
         print("Angle A: {:.2f}".format(Angle_A))
         Angle_B = math.degrees(math.asin(Vertical / Hypotenuse))
         print("Angle B: {:.2f}".format(Angle_B))
+
     elif given_sides == 1:
         if Angle_A != "":
             Angle_B = 90 - Angle_A
+            Rad_Angle_A = math.radians(Angle_A)
             if Horizontal != "":
-                Vertical = Horizontal / math.degrees(math.tan(Angle_A))
-                Hypotenuse = Horizontal / math.degrees(math.sin(Angle_A))
+                Vertical = Horizontal / math.tan(Rad_Angle_A)
+                Hypotenuse = Horizontal / math.sin(Rad_Angle_A)
             elif Vertical != "":
-                Horizontal = Vertical * math.degrees(math.tan(Angle_A))
-                Hypotenuse = Vertical / math.degrees(math.cos(Angle_A))
+                Horizontal = Vertical * math.tan(Rad_Angle_A)
+                Hypotenuse = Vertical / math.cos(Rad_Angle_A)
             elif Hypotenuse != "":
-                Horizontal = Hypotenuse * math.degrees(math.cos(Angle_A))
-                Vertical = Hypotenuse * math.degrees(math.sin(Angle_A))
+                Horizontal = Hypotenuse * math.cos(Rad_Angle_A)
+                Vertical = Hypotenuse * math.sin(Rad_Angle_A)
 
         elif Angle_B != "":
             Angle_A = 90 - Angle_B
+            Rad_Angle_B = math.radians(Angle_B)
             if Horizontal != "":
-                Vertical = Horizontal * math.degrees(math.tan(Angle_B))
-                Hypotenuse = Horizontal / math.degrees(math.cos(Angle_B))
+                Vertical = Horizontal * math.tan(Rad_Angle_B)
+                Hypotenuse = Horizontal / math.cos(Rad_Angle_B)
             elif Vertical != "":
-                Horizontal = Vertical / math.degrees(math.tan(Angle_B))
-                Hypotenuse = Horizontal / math.degrees(math.sin(Angle_B))
+                Horizontal = Vertical / math.tan(Rad_Angle_B)
+                Hypotenuse = Vertical / math.sin(Rad_Angle_B)
             elif Hypotenuse != "":
-                Horizontal = Hypotenuse * math.degrees(math.sin(Angle_B))
-                Vertical = Hypotenuse * math.degrees(math.cos(Angle_B))
+                Horizontal = Hypotenuse * math.sin(Rad_Angle_B)
+                Vertical = Hypotenuse * math.cos(Rad_Angle_B)
 
-    
+    triangle_data[0] = Vertical
+    triangle_data[1] = Horizontal
+    triangle_data[2] = Hypotenuse
+    triangle_data[3] = Angle_A
+    triangle_data[4] = Angle_B
+
+    return triangle_data
 
 
 # Main Routine
