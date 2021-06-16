@@ -54,7 +54,7 @@ def get_triangle_data():
                 given_sides += 1
 
             if given_sides == 2:
-                return triangle_data
+                return [triangle_data, given_sides]
 
         if given_sides == 1:
 
@@ -64,14 +64,14 @@ def get_triangle_data():
                 if triangle_data[item + 3] == "xxx":
                     return "xxx"
                 elif triangle_data[item + 3] != "":
-                    return
+                    return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
                 print("Please Enter 2 sides or 1 angle and a side")
                 continue
 
         elif given_sides == 2:
-            return triangle_data
+            return [triangle_data, given_sides]
         else:
             print("please enter at least one side")
 
@@ -92,7 +92,7 @@ def triangle_solver(raw_triangle_data_var):
                 Hypotenuse = math.sqrt(math.pow(Horizontal, 2) + math.pow(Vertical, 2))
 
             elif Hypotenuse != "":
-                Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2)) 
+                Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2))
 
         elif Horizontal != "" and Hypotenuse != "":
             Vertical = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Horizontal, 2))
@@ -144,4 +144,3 @@ while raw_triangle_data != "xxx":
         break
     refined_triangle_data = triangle_solver(raw_triangle_data)
     print(refined_triangle_data)
-    

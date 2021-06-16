@@ -47,7 +47,7 @@ def get_triangle_data():
                 given_sides += 1
 
             if given_sides == 2:
-                return triangle_data
+                return [triangle_data, given_sides]
 
         if given_sides == 1:
 
@@ -55,14 +55,14 @@ def get_triangle_data():
             for item in range(0, len(angles_heading)):
                 triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
                 if triangle_data[item + 3] != "":
-                    return
+                    return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
                 print("Please Enter 2 sides or 1 angle and a side")
                 continue
 
         elif given_sides == 2:
-            return triangle_data
+            return [triangle_data, given_sides]
         else:
             print("please enter at least one side")
 

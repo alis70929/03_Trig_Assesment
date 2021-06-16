@@ -43,40 +43,31 @@ def get_triangle_data():
     valid = False
     while not valid:
         given_sides = 0
+        sides_headings = ["Vertical", "Horizontal", "Hypotenuse"]
+        for item in range(0, len(sides_headings)):
+            triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
+            if triangle_data[item] != "":
+                given_sides += 1
 
-        triangle_data[0] = num_check("Vertical side length: ", None)
-        if triangle_data[0] != "":
-            given_sides += 1
-
-        triangle_data[1] = num_check("Horizontal side length: ", None)
-        if triangle_data[1] != "":
-            given_sides += 1
-
-        if given_sides == 2:
-            break
-
-        triangle_data[2] = num_check("Hypotenuse side length: ", None)
-        if triangle_data[2] != "":
-            given_sides += 1
+            if given_sides == 2:
+                return [triangle_data, given_sides]
 
         if given_sides == 1:
-            triangle_data[3] = num_check("Angle A: ", 90)
-            if triangle_data[3] != "":
-                break
 
-            triangle_data[4] = num_check("Angle B: ", 90)
-            if triangle_data[4] != "":
-                break
+            angles_heading = ["Angle A", "Angle B"]
+            for item in range(0, len(angles_heading)):
+                triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
+                if triangle_data[item + 3] != "":
+                    return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
                 print("Please Enter 2 sides or 1 angle and a side")
                 continue
+
         elif given_sides == 2:
-            break
+            return [triangle_data, given_sides]
         else:
             print("please enter at least one side")
-
-    return [triangle_data, given_sides]
 
 
 def triangle_solver(raw_triangle_data_var):
