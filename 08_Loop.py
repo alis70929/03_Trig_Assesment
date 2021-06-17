@@ -76,6 +76,7 @@ def get_triangle_data():
             print("please enter at least one side")
 
 
+# solves right angle triangle when given raw triangle data
 def triangle_solver(raw_triangle_data_var):
     given_sides = raw_triangle_data_var[1]
     triangle_data = raw_triangle_data_var[0]
