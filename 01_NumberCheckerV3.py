@@ -2,7 +2,7 @@
 def num_check(question, upper_bound=None, lower_bound=None):
 
     if upper_bound is not None:
-        error = "please enter a number greater than 0 and lower than or equal to {}".format(upper_bound)
+        error = "please enter a number greater than 0 and lower than {}".format(upper_bound)
     elif lower_bound is not None:
         error = "please enter a number greater than {}".format(lower_bound)
     else:
@@ -15,6 +15,8 @@ def num_check(question, upper_bound=None, lower_bound=None):
 
             if response == "":
                 return response
+            elif response == "xxx":
+                return response
 
             response = float(response)
 
@@ -24,6 +26,11 @@ def num_check(question, upper_bound=None, lower_bound=None):
                 else:
                     print(error)
                     continue
+            elif lower_bound is not None:
+                if response > lower_bound:
+                    return response
+                else:
+                    print(error)
             else:
                 if response > 0:
                     return response
@@ -36,5 +43,6 @@ def num_check(question, upper_bound=None, lower_bound=None):
 
 ''' for item in range(0, 2):
     side_length = num_check("Side Length: ", None) '''
-for item in range(0, 4):
-    first_angle = num_check("First angle:", 90)
+# for item in range(0, 4):
+#   first_angle = num_check("First angle:", 90)
+hypotenuse = num_check("Hypotenuse: ", None, 12)
