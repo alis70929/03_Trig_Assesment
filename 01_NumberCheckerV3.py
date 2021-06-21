@@ -13,9 +13,9 @@ def num_check(question, upper_bound=None, lower_bound=None):
         try:
             response = input(question)
 
-            if response == "":
+            if response == "xxx":
                 return response
-            elif response == "xxx":
+            elif response == "":
                 return response
 
             response = float(response)

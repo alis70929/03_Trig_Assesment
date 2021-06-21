@@ -1,5 +1,6 @@
 # Import Statements Here
 import math
+import pandas
 
 
 # Functions Here
@@ -18,9 +19,9 @@ def num_check(question, upper_bound=None, lower_bound=None):
         try:
             response = input(question)
 
-            if response == "":
+            if response == "xxx":
                 return response
-            elif response == "xxx":
+            elif response == "":
                 return response
 
             response = float(response)
@@ -57,7 +58,9 @@ def get_triangle_data():
         sides_headings = ["Vertical", "Horizontal", "Hypotenuse"]
         for item in range(0, len(sides_headings)):
             triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
-            if triangle_data[item] != "":
+            if triangle_data[item] == "xxx":
+                return "xxx"
+            elif triangle_data[item] != "":
                 given_sides += 1
 
             if given_sides == 2:
@@ -68,7 +71,9 @@ def get_triangle_data():
             angles_heading = ["Angle A", "Angle B"]
             for item in range(0, len(angles_heading)):
                 triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
-                if triangle_data[item + 3] != "":
+                if triangle_data[item + 3] == "xxx":
+                    return "xxx"
+                elif triangle_data[item + 3] != "":
                     return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
@@ -144,3 +149,44 @@ def triangle_solver(raw_triangle_data_var):
     triangle_data[4] = Angle_B
 
     return triangle_data
+
+
+# Main Routine
+
+# Setup Lists for dictionary
+
+Verticals = []
+Horizontals = []
+Hypotenuses = []
+Angle_As = []
+Angle_Bs = []
+# Full_Triangle_Data = [Verticals, Horizontals, Hypotenuses, Angle_As, Angle_Bs]
+
+triangle_data_dictionary = {
+    "Vertical": Verticals,
+    "Horizontal": Horizontals,
+    "Hypotenuse": Hypotenuses,
+    "Angle A": Angle_As,
+    "Angle B": Angle_Bs
+}
+
+# loop till exit code entered
+raw_triangle_data = ""
+while raw_triangle_data != "xxx":
+    # Get known triangle data from users
+    raw_triangle_data = get_triangle_data()
+    # if exit code entered break out of loop
+    if raw_triangle_data == "xxx":
+        break
+    # Solve rest of triangle
+    refined_triangle_data = triangle_solver(raw_triangle_data)
+
+    headings = ["Vertical", "Horizontal", "Hypotenuse", "Angle A", "Angle B"]
+    for item in range(0, len(headings)):
+        print("{}: {}".format(headings[item], refined_triangle_data[item]))
+        triangle_data_dictionary[headings[item]].append(refined_triangle_data[item])
+
+    # Could put do you want to continue question here but would require yes/no checker
+
+triangle_data_frame = pandas.DataFrame(triangle_data_dictionary)
+print(triangle_data_frame)
