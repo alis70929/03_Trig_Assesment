@@ -55,25 +55,26 @@ def get_triangle_data():
     valid = False
     while not valid:
         given_sides = 0
-        sides_headings = ["Vertical", "Horizontal", "Hypotenuse"]
+        sides_headings = ["Vertical", "Horizontal"]
         for item in range(0, len(sides_headings)):
             triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
-            if triangle_data[item] == "xxx":
-                return "xxx"
-            elif triangle_data[item] != "":
+            if triangle_data[item] != "":
                 given_sides += 1
 
             if given_sides == 2:
                 return [triangle_data, given_sides]
+
+        if triangle_data[0] != "":
+            triangle_data[2] = num_check("Hypotenuse side length:", None, triangle_data[0])
+        elif triangle_data[1] != "":
+            triangle_data[2] = num_check("Hypotenuse side length:", None, triangle_data[1])
 
         if given_sides == 1:
 
             angles_heading = ["Angle A", "Angle B"]
             for item in range(0, len(angles_heading)):
                 triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
-                if triangle_data[item + 3] == "xxx":
-                    return "xxx"
-                elif triangle_data[item + 3] != "":
+                if triangle_data[item + 3] != "":
                     return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
@@ -100,20 +101,15 @@ def triangle_solver(raw_triangle_data_var):
         if Vertical != "":
             if Horizontal != "":
                 Hypotenuse = math.sqrt(math.pow(Horizontal, 2) + math.pow(Vertical, 2))
-                print("Hypotenuse: {:.2f}".format(Hypotenuse))
 
             elif Hypotenuse != "":
                 Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2))
-                print("Horizontal: {:.2f}".format(Horizontal))
 
         elif Horizontal != "" and Hypotenuse != "":
             Vertical = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Horizontal, 2))
-            print("Vertical: {:.2f}".format(Vertical))
 
         Angle_A = math.degrees(math.asin(Horizontal / Hypotenuse))
-        print("Angle A: {:.2f}".format(Angle_A))
         Angle_B = math.degrees(math.asin(Vertical / Hypotenuse))
-        print("Angle B: {:.2f}".format(Angle_B))
 
     elif given_sides == 1:
         if Angle_A != "":
@@ -180,13 +176,14 @@ while raw_triangle_data != "xxx":
         break
     # Solve rest of triangle
     refined_triangle_data = triangle_solver(raw_triangle_data)
-
+    print()
     headings = ["Vertical", "Horizontal", "Hypotenuse", "Angle A", "Angle B"]
     for item in range(0, len(headings)):
-        print("{}: {}".format(headings[item], refined_triangle_data[item]))
+        # print("{}: {}".format(headings[item], refined_triangle_data[item]))
         triangle_data_dictionary[headings[item]].append(refined_triangle_data[item])
 
     # Could put do you want to continue question here but would require yes/no checker
 
 triangle_data_frame = pandas.DataFrame(triangle_data_dictionary)
-print(triangle_data_frame)
+if len(Verticals) != 0:
+    print(triangle_data_frame[["Vertical"]])

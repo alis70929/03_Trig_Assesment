@@ -43,7 +43,7 @@ def get_triangle_data():
     valid = False
     while not valid:
         given_sides = 0
-        sides_headings = ["Vertical", "Horizontal", "Hypotenuse"]
+        sides_headings = ["Vertical", "Horizontal"]
         for item in range(0, len(sides_headings)):
             triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
             if triangle_data[item] != "":
@@ -51,6 +51,10 @@ def get_triangle_data():
 
             if given_sides == 2:
                 return [triangle_data, given_sides]
+        if triangle_data[0] != "":
+            triangle_data[2] = num_check("Hypotenuse side length", None, triangle_data[0])
+        elif triangle_data[1] != "":
+            triangle_data[2] = num_check("Hypotenuse side length", None, triangle_data[1])
 
         if given_sides == 1:
 
