@@ -48,7 +48,6 @@ def num_check(question, upper_bound=None, lower_bound=None):
 
 
 # get side information from user, returns sides in a list (Vertical,horizontal hypotenuse) and how many sides are given
-# get side information from user, returns sides in a list (Vertical,horizontal hypotenuse) and how many sides are given
 def get_triangle_data():
     # store triangle data
     triangle_data = ["", "", "", "", ""]
@@ -72,7 +71,7 @@ def get_triangle_data():
                 triangle_data[2] = num_check("Hypotenuse side length: ", None, triangle_data[item])
                 if triangle_data[2] == "xxx":
                     return "xxx"
-                if triangle_data[item] != "":
+                if triangle_data[2] != "":
                     given_sides += 1
 
                 if given_sides == 2:
@@ -196,5 +195,6 @@ while raw_triangle_data != "xxx":
     # Could put do you want to continue question here but would require yes/no checker
 
 triangle_data_frame = pandas.DataFrame(triangle_data_dictionary)
+triangle_data_frame = triangle_data_frame.round(decimals=2)
 if len(Verticals) != 0:
     print(triangle_data_frame)

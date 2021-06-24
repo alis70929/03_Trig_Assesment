@@ -76,7 +76,9 @@ def get_triangle_data():
             angles_heading = ["Angle A", "Angle B"]
             for item in range(0, len(angles_heading)):
                 triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
-                if triangle_data[item + 3] != "":
+                if triangle_data[item + 3] == "xxx":
+                    return "xxx"
+                elif triangle_data[item + 3] != "":
                     return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":

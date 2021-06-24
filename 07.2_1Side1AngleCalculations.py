@@ -46,22 +46,33 @@ def get_triangle_data():
         sides_headings = ["Vertical", "Horizontal"]
         for item in range(0, len(sides_headings)):
             triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
+            if triangle_data[item] == "xxx":
+                return
             if triangle_data[item] != "":
                 given_sides += 1
 
             if given_sides == 2:
                 return [triangle_data, given_sides]
-        if triangle_data[0] != "":
-            triangle_data[2] = num_check("Hypotenuse side length", None, triangle_data[0])
-        elif triangle_data[1] != "":
-            triangle_data[2] = num_check("Hypotenuse side length", None, triangle_data[1])
+
+        for item in range(0, len(sides_headings)):
+            if triangle_data[item] != "":
+                triangle_data[2] = num_check("Hypotenuse side length: ", None, triangle_data[item])
+                if triangle_data[2] == "xxx":
+                    return
+                if triangle_data[item] != "":
+                    given_sides += 1
+
+                if given_sides == 2:
+                    return [triangle_data, given_sides]
 
         if given_sides == 1:
 
             angles_heading = ["Angle A", "Angle B"]
             for item in range(0, len(angles_heading)):
                 triangle_data[item + 3] = num_check("{}:".format(angles_heading[item]))
-                if triangle_data[item + 3] != "":
+                if triangle_data[item + 3] == "xxx":
+                    return "xxx"
+                elif triangle_data[item + 3] != "":
                     return [triangle_data, given_sides]
 
             if triangle_data[0] == "" and triangle_data[1] == "":
