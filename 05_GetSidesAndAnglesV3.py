@@ -56,7 +56,7 @@ def get_triangle_data():
                 triangle_data[2] = num_check("Hypotenuse side length: ", None, triangle_data[item])
                 if triangle_data[2] == "xxx":
                     return
-                if triangle_data[item] != "":
+                if triangle_data[2] != "":
                     given_sides += 1
 
                 if given_sides == 2:

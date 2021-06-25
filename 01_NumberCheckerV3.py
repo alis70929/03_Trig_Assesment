@@ -1,12 +1,12 @@
-# checks if flaot is greater than 0 and less than upper bound
+# checks if flaot is greater than/equal to 0.01 and less than upper bound, or just greater than given lower bound
 def num_check(question, upper_bound=None, lower_bound=None):
 
     if upper_bound is not None:
-        error = "please enter a number greater than 0 and lower than {}".format(upper_bound)
+        error = "please enter a number greater than 0.01 and lower than {}".format(upper_bound)
     elif lower_bound is not None:
         error = "please enter a number greater than {}".format(lower_bound)
     else:
-        error = "please enter any number greater than 0"
+        error = "please enter any number greater than or equal to 0.01"
 
     valid = False
     while not valid:
@@ -19,10 +19,14 @@ def num_check(question, upper_bound=None, lower_bound=None):
                 return response
 
             response = float(response)
+            if response < 0.01:
+                print("your input is smaller than 0.01, consider converting to a smaller unit before trying again")
+                continue
 
             if upper_bound is not None:
-                if response > 0 and response < upper_bound:
+                if response < upper_bound:
                     return response
+
                 else:
                     print(error)
                     continue

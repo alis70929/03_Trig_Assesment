@@ -99,20 +99,15 @@ def triangle_solver(raw_triangle_data_var):
         if Vertical != "":
             if Horizontal != "":
                 Hypotenuse = math.sqrt(math.pow(Horizontal, 2) + math.pow(Vertical, 2))
-                print("Hypotenuse: {:.2f}".format(Hypotenuse))
 
             elif Hypotenuse != "":
                 Horizontal = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Vertical, 2))
-                print("Horizontal: {:.2f}".format(Horizontal))
 
         elif Horizontal != "" and Hypotenuse != "":
             Vertical = math.sqrt(math.pow(Hypotenuse, 2) - math.pow(Horizontal, 2))
-            print("Vertical: {:.2f}".format(Vertical))
 
         Angle_A = math.degrees(math.asin(Horizontal / Hypotenuse))
-        print("Angle A: {:.2f}".format(Angle_A))
         Angle_B = math.degrees(math.asin(Vertical / Hypotenuse))
-        print("Angle B: {:.2f}".format(Angle_B))
 
     elif given_sides == 1:
         if Angle_A != "":

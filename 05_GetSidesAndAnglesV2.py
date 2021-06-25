@@ -53,18 +53,18 @@ def get_triangle_data():
         for item in range(0, len(sides_headings)):
             triangle_data[item] = num_check("{} side length: ".format(sides_headings[item]), None)
             if triangle_data[item] == "xxx":
-                return
+                return "xxx"
             if triangle_data[item] != "":
                 given_sides += 1
 
             if given_sides == 2:
                 return [triangle_data, given_sides]
-        
+
         for item in range(0, len(sides_headings)):
             if triangle_data[item] != "":
                 triangle_data[2] = num_check("Hypotenuse side length: ", None, triangle_data[item])
                 if triangle_data[2] == "xxx":
-                    return
+                    return "xxx"
                 if triangle_data[item] != "":
                     given_sides += 1
 
