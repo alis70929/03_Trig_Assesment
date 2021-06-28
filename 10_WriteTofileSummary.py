@@ -166,7 +166,7 @@ def triangle_solver(raw_triangle_data_var):
         if triangle_data[item] != "":
             triangle_data[item] = "{} (given)".format(temporary_triangle_data[item])
         else:
-            triangle_data[item] = temporary_triangle_data[item]
+            triangle_data[item] = "{:.2f}".format(temporary_triangle_data[item])
 
     return triangle_data
 
@@ -212,3 +212,4 @@ triangle_data_frame = pandas.DataFrame(triangle_data_dictionary)
 triangle_data_frame = triangle_data_frame.round(decimals=2)
 if len(Verticals) != 0:
     print(triangle_data_frame)
+    triangle_data_frame.to_csv("triangle_data.csv")
