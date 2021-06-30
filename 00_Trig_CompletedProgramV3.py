@@ -4,7 +4,7 @@ import pandas
 
 
 # Functions Here
-# checks if flaot is greater than 0 and less than upper bound
+# checks if float is greater than 0.01 or lower bound, and less than upper bound
 def num_check(question, upper_bound=None, lower_bound=None):
 
     if upper_bound is not None:
@@ -47,7 +47,9 @@ def num_check(question, upper_bound=None, lower_bound=None):
             print(error)
 
 
-# get side information from user, returns sides in a list (Vertical,horizontal hypotenuse) and how many sides are given
+# get triangle information from user returns triangle data in a list
+# (Vertical,horizontal, hypotenuse, Angle A, Angle B)
+# and how many sides are given
 def get_triangle_data():
     # store triangle data
     triangle_data = ["", "", "", "", ""]
@@ -107,6 +109,7 @@ def get_triangle_data():
             print("please enter at least one side")
 
 
+# Solve Triangle, Returns triangle data in list 
 def triangle_solver(raw_triangle_data_var):
     given_sides = raw_triangle_data_var[1]
     triangle_data = raw_triangle_data_var[0]
@@ -171,10 +174,59 @@ def triangle_solver(raw_triangle_data_var):
     return triangle_data
 
 
+# loops till response is yes or no
+def yes_no(question):
+    to_check = ["yes", "no"]
+
+    valid = False
+    while not valid:
+
+        response = input(question).lower()
+
+        for item in to_check:
+            if response == item:
+                return item
+            elif response == item[0]:
+                return item
+
+        print("Please enter yes or no")
+
+
+def display_triangle():
+    triangle = "V |\ H \n" \
+               "E |A\ Y \n" \
+               "R |  \ P \n" \
+               "T |   \ O \n" \
+               "I |    \ T \n" \
+               "C |     \ E \n" \
+               "A |      \ N \n" \
+               "L |       \ U \n" \
+               "  |        \ S \n" \
+               "  |________B\ E \n" \
+               "  HORIZONTAL \n"
+    print(triangle)
+
+
+def intro():
+    print("**** Right Angle Triangle Solver ****")
+    used_before = yes_no("Do you know how to use this program? (Y/N)")
+    if used_before == "yes":
+        print("Instructions - \n"
+              " - Compare your right angle triangle to the triangle shown below")
+        display_triangle()
+        print(" - Figure out which sides of your triangle are Vertical, Horizontal, Hypotenuse \n" 
+              "   and figure out which angles are angleA and angleB\n "
+              " - From there it will ask you for information you have,\n"
+              "   if you don't know a side or angle just press <enter>\n"
+              " - Enter 'xxx' at any point to get a summary of all your solved triangle data\n"
+              "   Which will also be save to a csv file called triangle_data")
+        input("Press <enter> when you are ready to continue")
+    else:
+        return
+
+
 # Main Routine
-
 # Setup Lists for dictionary
-
 Verticals = []
 Horizontals = []
 Hypotenuses = []
@@ -182,6 +234,7 @@ Angle_As = []
 Angle_Bs = []
 # Full_Triangle_Data = [Verticals, Horizontals, Hypotenuses, Angle_As, Angle_Bs]
 
+# Dictionary for pandas data frame
 triangle_data_dictionary = {
     "Vertical": Verticals,
     "Horizontal": Horizontals,
@@ -190,9 +243,18 @@ triangle_data_dictionary = {
     "Angle B": Angle_Bs
 }
 
+# Introduction and instructions
+intro()
+print()
+
 # loop till exit code entered
+loop_counter = 1
 raw_triangle_data = ""
 while raw_triangle_data != "xxx":
+    # Heading
+    print("**** Triangle {} ****".format(loop_counter))
+    loop_counter += 1
+
     # Get known triangle data from users
     raw_triangle_data = get_triangle_data()
     # if exit code entered break out of loop
@@ -203,13 +265,20 @@ while raw_triangle_data != "xxx":
     print()
     headings = ["Vertical", "Horizontal", "Hypotenuse", "Angle A", "Angle B"]
     for item in range(0, len(headings)):
-        # print("{}: {}".format(headings[item], refined_triangle_data[item]))
+        print("{}: {}".format(headings[item], refined_triangle_data[item]))
         triangle_data_dictionary[headings[item]].append(refined_triangle_data[item])
+    print()
+    # Ask user if they want to continue loop
+    continue_loop = yes_no("Do you have another right angle triangle to solve (Y/N)")
+    if continue_loop == "no":
+        break
 
-    # Could put do you want to continue question here but would require yes/no checker
-
+# Set up data frame
 triangle_data_frame = pandas.DataFrame(triangle_data_dictionary)
+# set columns in the same way as asked for
 triangle_data_frame = triangle_data_frame[["Vertical", "Horizontal", "Hypotenuse", "Angle A", "Angle B"]]
+
+# if there is nothing in the triangle data lists then dont show empty data frame
 if len(Verticals) != 0:
     print(triangle_data_frame)
     triangle_data_frame.to_csv("triangle_data.csv")
