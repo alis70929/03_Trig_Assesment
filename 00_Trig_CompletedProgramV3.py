@@ -5,14 +5,15 @@ import pandas
 
 # Functions Here
 # checks if float is greater than 0.01 or lower bound, and less than upper bound
+# checks if flaot is greater than/equal to 0.01 and less than upper bound, or just greater than given lower bound
 def num_check(question, upper_bound=None, lower_bound=None):
 
     if upper_bound is not None:
-        error = "please enter a number greater than 0 and lower than {}".format(upper_bound)
+        error = "please enter a number greater than 0.01 and lower than {}".format(upper_bound)
     elif lower_bound is not None:
         error = "please enter a number greater than {}".format(lower_bound)
     else:
-        error = "please enter any number greater than 0"
+        error = "please enter any number greater than or equal to 0.01"
 
     valid = False
     while not valid:
@@ -25,10 +26,18 @@ def num_check(question, upper_bound=None, lower_bound=None):
                 return response
 
             response = float(response)
+            # error for unit too small for sides
+            if response < 0.01 and upper_bound is None:
+                print("your input is smaller than 0.01, please convert to a smaller unit of distance before trying again")
+                continue
+            elif response < 0.01 and upper_bound is not None:
+                print("Please round your angle up to at least 0.01")
+                continue
 
             if upper_bound is not None:
-                if response > 0 and response < upper_bound:
+                if response < upper_bound:
                     return response
+
                 else:
                     print(error)
                     continue
@@ -192,6 +201,8 @@ def yes_no(question):
         print("Please enter yes or no")
 
 
+# Displays a right angle triangle with labelled sides
+# (Horizontal, Vertical, Hypotenuse, AngleA, AngleB)
 def display_triangle():
     triangle = "V |\ H \n" \
                "E |A\ Y \n" \
@@ -207,20 +218,23 @@ def display_triangle():
     print(triangle)
 
 
+# Intro and introduction
 def intro():
     print("**** Right Angle Triangle Solver ****")
-    used_before = yes_no("Do you know how to use this program? (Y/N)")
-    if used_before == "yes":
-        print("Instructions - \n"
-              " - Compare your right angle triangle to the triangle shown below")
+    used_before = yes_no("Do you know how to use this program? (Y/N): ")
+    if used_before == "no":
+        
         display_triangle()
-        print(" - Figure out which sides of your triangle are Vertical, Horizontal, Hypotenuse \n" 
+        print("Instructions - \n"
+              " - Compare your right angle triangle to the triangle shown below\n"
+              " - Figure out which sides of your triangle are Vertical, Horizontal, Hypotenuse \n"
               "   and figure out which angles are angleA and angleB\n "
-              " - From there it will ask you for information you have,\n"
+              " - From there it will ask you for information you have must be greater than or equal to 0.01,\n"
+              "   if your distances are less than 0.01 than change to a smaller unit of distance before trying again\n"
               "   if you don't know a side or angle just press <enter>\n"
               " - Enter 'xxx' at any point to get a summary of all your solved triangle data\n"
               "   Which will also be save to a csv file called triangle_data")
-        input("Press <enter> when you are ready to continue")
+        input("\n Press <enter> when you have read the instructions")
     else:
         return
 
@@ -232,7 +246,6 @@ Horizontals = []
 Hypotenuses = []
 Angle_As = []
 Angle_Bs = []
-# Full_Triangle_Data = [Verticals, Horizontals, Hypotenuses, Angle_As, Angle_Bs]
 
 # Dictionary for pandas data frame
 triangle_data_dictionary = {
@@ -263,13 +276,17 @@ while raw_triangle_data != "xxx":
     # Solve rest of triangle
     refined_triangle_data = triangle_solver(raw_triangle_data)
     print()
+
     headings = ["Vertical", "Horizontal", "Hypotenuse", "Angle A", "Angle B"]
     for item in range(0, len(headings)):
         print("{}: {}".format(headings[item], refined_triangle_data[item]))
         triangle_data_dictionary[headings[item]].append(refined_triangle_data[item])
     print()
+
     # Ask user if they want to continue loop
-    continue_loop = yes_no("Do you have another right angle triangle to solve (Y/N)")
+    continue_loop = yes_no("Do you have another right angle triangle to solve (Y/N): ")
+    print()
+
     if continue_loop == "no":
         break
 
